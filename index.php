@@ -28,33 +28,64 @@
                 }
                 function show_cell($which){
                     $token = $this->position[$which];
-                    if($token <> '-'){ return '<td>'.$token.'</td>';}
+                    if($token <> '-'){ return '<td>'.$token.'</td>';} //If there's a free slot this allows you to execute code
                     $this-> newposition = $this->position;
-                    $this-> newposition[$which] = 'o';
+                    $this-> newposition[$which] = 'o'; // Allows you to select a square.
                     $move = implode($this->newposition);
                     
-                    $link = 'http://localhost:8080/ACIT4850Lab1/index.php/?board='.$move;
-                    return '<td><a href="'.$link.'">-</a></td>';
+                    $link = 'http://localhost:8080/ACIT4850Lab1/index.php/?board='.$move; //Changes URL to accomadate changes.
+                    return '<td><a href="'.$link.'">-</a></td>'; //New link
                 }
                 
                 function Winner($token){
                     $winner = false;
+                    //Winning rows horizontally.
                     for($row=0; $row<3; $row++){
-                    if( ($this->position[0] == $token) && 
-                        ($this->position[1] == $token) && 
-                        ($this->position[2] == $token))
+                    if( ($this->position[3*$row] == $token) && 
+                        ($this->position[3*$row+1] == $token) && 
+                        ($this->position[3*$row+2] == $token))
                         { 
                             $winner = true; 
                         }
                     }
-                    for($col=0; $col<3; $col++){
-                    if( ($this->position[0] == $token) && 
+                    /*
+                    if( ($this->position[3] == $token) && 
                         ($this->position[4] == $token) && 
+                        ($this->position[5] == $token))
+                        { 
+                            $winner = true; 
+                        }
+                    if( ($this->position[6] == $token) && 
+                        ($this->position[7] == $token) && 
+                        ($this->position[8] == $token))
+                        { 
+                            $winner = true; 
+                        }
+                     */
+                    //Winning rows vertically.
+                    for($col=0; $col<3; $col++){
+                    if( ($this->position[$col] == $token) && 
+                        ($this->position[$col+3] == $token) && 
+                        ($this->position[$col+6] == $token))
+                        { 
+                            $winner = true; 
+                        }
+                    }
+                    /*
+                    if( ($this->position[1] == $token) && 
+                        ($this->position[4] == $token) && 
+                        ($this->position[7] == $token))
+                        { 
+                            $winner = true; 
+                        }
+                    if( ($this->position[2] == $token) && 
+                        ($this->position[5] == $token) && 
                         ($this->position[8] == $token))
                         { 
                             $winner = true; 
                         }
                     }
+                     */
                     //Left to right diagonal starting from the top.
                     if( ($this->position[0] == $token) && 
                         ($this->position[4] == $token) && 
