@@ -48,20 +48,6 @@
                             $winner = true; 
                         }
                     }
-                    /*
-                    if( ($this->position[3] == $token) && 
-                        ($this->position[4] == $token) && 
-                        ($this->position[5] == $token))
-                        { 
-                            $winner = true; 
-                        }
-                    if( ($this->position[6] == $token) && 
-                        ($this->position[7] == $token) && 
-                        ($this->position[8] == $token))
-                        { 
-                            $winner = true; 
-                        }
-                     */
                     //Winning rows vertically.
                     for($col=0; $col<3; $col++){
                     if( ($this->position[$col] == $token) && 
@@ -71,21 +57,6 @@
                             $winner = true; 
                         }
                     }
-                    /*
-                    if( ($this->position[1] == $token) && 
-                        ($this->position[4] == $token) && 
-                        ($this->position[7] == $token))
-                        { 
-                            $winner = true; 
-                        }
-                    if( ($this->position[2] == $token) && 
-                        ($this->position[5] == $token) && 
-                        ($this->position[8] == $token))
-                        { 
-                            $winner = true; 
-                        }
-                    }
-                     */
                     //Left to right diagonal starting from the top.
                     if( ($this->position[0] == $token) && 
                         ($this->position[4] == $token) && 
