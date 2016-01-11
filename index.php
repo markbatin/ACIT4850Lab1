@@ -1,4 +1,3 @@
-
 <html>
     <head>
         <meta charset="UTF-8">
@@ -6,17 +5,37 @@
     </head>
     <body>
         <?php
+                    $position = $_GET['board'];
+            //$squares = str_split($position);
+            $game = new Game($position);
+            $game->pick_move();
+            $game->display();
+
+            if($game->Winner('x')){
+                echo '<p style="font-size:300%">You win!<p>';                
+            }
+            else if ($game->Winner('o')){
+                echo '<p style="font-size:300%">I win!</p>';
+            }
+            else {
+                echo '<p style="font-size:300%">No winner yet!</p>';
+            }
+            
+            ?>
+        
+        
+       </body>
+</html>
+<?php        
         //check if a board parameter was passed
-        if(!isset($_GET['board'])){echo 'Must enter the board parameter!';}
-        else {
-            echo '<p style="font-size:300%">Hi, welcome to this great tic-tac-toe game.</p>';
+            
             class Game {
                 var $position;
                 function Game($squares){
                     $this->position = str_split($squares);
                 }
-                
                 function display(){
+                    echo '<p style="font-size:300%">Welcome to Rival, the evil tic-tac-toe game.</p>';
                     echo '<table cols="3" style="font-size:500%; font-weight:bold; width:50%;">'; //Creates a new table to display x's and o's
                     echo '<tr>'; //Create a new table row.
                     for($pos=0; $pos<9; $pos++){
@@ -26,16 +45,26 @@
                     echo '</tr>';// Closes table row.
                     echo '</table>'; // Closes table.
                 }
+
                 function show_cell($which){
                     $token = $this->position[$which];
                     if($token <> '-'){ return '<td>'.$token.'</td>';} //If there's a free slot this allows you to execute code
-                    $this-> newposition = $this->position;
-                    $this-> newposition[$which] = 'o'; // Allows you to select a square.
-                    $move = implode($this->newposition);
+                    $this-> newposition = $this->position;  // copy the original
+                    $this-> newposition[$which] = 'x';      // this would be their move
+                    $move = implode($this->newposition);    // make a string from the board array
                     
                     $link = 'http://localhost:8080/ACIT4850Lab1/index.php/?board='.$move; //Changes URL to accomadate changes.
                     return '<td><a href="'.$link.'">-</a></td>'; //New link
                 }
+                
+                function pick_move() {
+                    for($i=0; $i<8; $i++){
+                        if($this->position[$i] == '-'){
+                           $this->position[$i] = 'o';
+                           break;
+                        }
+                    }
+                }                
                 
                 function Winner($token){
                     $winner = false;
@@ -72,18 +101,6 @@
                             $winner = true; 
                         }
                 return $winner;   
-                }
             }
-            
-            $position = $_GET['board'];
-            //$squares = str_split($position);
-            $game = new Game($position);
-            $game->display();
-            if($game->Winner('x')){echo '<p style="font-size:300%">You win!<p>';}
-            else if ($game->Winner('o')){echo '<p style="font-size:300%">I win!</p>';}
-            else {echo '<p style="font-size:300%">No winner yet!</p>';}
         }
-        ?>
-        
-    </body>
-</html>
+    ?>
