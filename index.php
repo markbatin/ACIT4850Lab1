@@ -5,14 +5,14 @@
     </head>
     <body>
         <?php
-                    $position = $_GET['board'];
-            //$squares = str_split($position);
+            //Sets up game and allows it to display and use all the functons.
+            $position = $_GET['board'];
             $game = new Game($position);
             $game->pick_move();
             $game->display();
 
             if($game->Winner('x')){
-                echo '<p style="font-size:300%">You win!<p>';                
+                echo '<p style="font-size:300%">You win!<p>'; //User wins               
             }
             else if ($game->Winner('o')){
                 echo '<p style="font-size:300%">I win!</p>';
@@ -27,8 +27,6 @@
        </body>
 </html>
 <?php        
-        //check if a board parameter was passed
-            
             class Game {
                 var $position;
                 function Game($squares){
@@ -48,18 +46,19 @@
 
                 function show_cell($which){
                     $token = $this->position[$which];
-                    if($token <> '-'){ return '<td>'.$token.'</td>';} //If there's a free slot this allows you to execute code
-                    $this-> newposition = $this->position;  // copy the original
-                    $this-> newposition[$which] = 'x';      // this would be their move
-                    $move = implode($this->newposition);    // make a string from the board array
+                    if($token <> '-'){ return '<td>'.$token.'</td>';}   //If there's a free slot this allows you to execute code
+                    $this-> newposition = $this->position;              // copy the original
+                    $this-> newposition[$which] = 'x';                  // this would be their move
+                    $move = implode($this->newposition);                // make a string from the board array
                     
                     $link = 'http://localhost:8080/ACIT4850Lab1/index.php/?board='.$move; //Changes URL to accomadate changes.
                     return '<td><a href="'.$link.'">-</a></td>'; //New link
                 }
                 
+                //Bot picks its own move. Very simple AI.
                 function pick_move() {
                     for($i=0; $i<8; $i++){
-                        if($this->position[$i] == '-'){
+                        if($this->position[$i] == '-'){ //Replaces any - with an o.
                            $this->position[$i] = 'o';
                            break;
                         }
